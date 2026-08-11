@@ -9,7 +9,6 @@ export function useProducts(){
     useEffect(()=>{
         async function fetchProducts(){
             try{
-                setLoading(true);
                 const data=await getProducts();
                 setProducts(data);
             }
@@ -25,6 +24,6 @@ export function useProducts(){
     return { 
         products,
         loading,
-        error 
+        error ,
     }
 }
