@@ -31,3 +31,26 @@ export async function getProductById(req,res){
         });
     }
 }
+export async function createProduct(req,res) {
+    try{
+        const { name , price , category }=req.body;
+        if(!name || !category || !price ){
+            res.status(400).json({ 
+                message:"Name , Price and Category are required",
+            }
+            )
+        }
+        const result=await pool.query(
+            `INSERT INTO products (name, price, category)
+             VALUES ($1, $2, $3)
+             RETURNING *`,
+            [name,price,category]
+        );
+        res.status(200).json(result.rows[0])
+    }catch(error){
+        res.status(500).json({
+            message:"failed to add product",
+            error:error.message,
+        })
+    }
+}
