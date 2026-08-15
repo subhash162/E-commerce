@@ -1,13 +1,26 @@
-import React, { useState } from 'react'
-import { createProduct } from '../api/adminProductApi';
+import React, { useEffect, useState } from 'react'
+import { createProduct, updateProduct } from '../api/adminProductApi';
 
-export default function ProductForm() {
+export default function ProductForm({
+    editingProduct,
+    onProductSaved,
+    onCancelEdit,
+}) {
     const [ formData , setFormData ]=useState({
         name:"",
         price:"",
         category:""
     })
     const [ loading , setLoading ]=useState(false);
+    useEffect(()=>{
+        if(editingProduct){
+            setFormData({
+                name:editingProduct.name,
+                price:editingProduct.price,
+                category:editingProduct.category,
+            })
+        }
+    },[editingProduct])
     function handleChange(event){
         const { name , value }=event.target;
 
@@ -23,11 +36,23 @@ export default function ProductForm() {
 
         try {
             setLoading(true);
+            let savedProduct;
 
-            const product=await createProduct({
-                ...formData,
-                price:Number(formData.price)
-            })
+            if(editingProduct){
+                savedProduct=await updateProduct(
+                    editingProduct.id,
+                    {
+                        ...formData,
+                        price:Number(formData.price)
+                    }
+                )
+            }else{
+                savedProduct=await createProduct({
+                    ...formData,
+                    price:Number(formData.price)
+                })
+            }
+            onProductSaved(savedProduct);
             setFormData({
                 name:"",
                 price:"",
@@ -77,8 +102,24 @@ export default function ProductForm() {
             </div>
         </div>
         <button type='submit' disabled={loading} className='flex justify-self-end   rounded-lg  p-[10px] bg-blue-500 transition delay-150 duration-700 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500'>
-        {loading?"Creating....":"Add Product"}
+        {
+        loading?
+        "Saving...."
+        :editingProduct
+        ?"Update Product"
+        :"CREATE Product"
+        }
        </button>
+       {
+        editingProduct && (
+            <button
+            type='button'
+            onClick={onCancelEdit}
+            >
+                cancel
+            </button>
+        )
+       }
         </div>
        
     </form>

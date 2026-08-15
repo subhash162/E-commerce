@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { deleteProduct, getAdminProducts } from '../api/adminProductApi';
 
-export default function AdminProductList() {
+export default function AdminProductList({ onEdit , refreshProducts }) {
     const [ products , setProducts ]=useState([]);
     const [ loading , setLoading ]=useState(true)
      useEffect(()=>{
         loadProducts()
-    },[])
+    },[refreshProducts])
     async function loadProducts() {
         try {
             const data=await getAdminProducts();
@@ -29,6 +29,9 @@ export default function AdminProductList() {
             console.error(error)
         }
     }
+    async function handleEdit(Product) {
+        onEdit(Product)
+    }
     if(loading){
         return <p>Loading.....</p>
     }
@@ -41,6 +44,7 @@ export default function AdminProductList() {
                     <h3>{product.name}</h3>
                     <p>{product.price}</p>
                     <p>{product.category}</p>
+                    <button onClick={()=>handleEdit(product)}>Edit</button>
                     <button onClick={()=>handleDelete(product.id)}>Delete</button>
                 </div>
             ))}
