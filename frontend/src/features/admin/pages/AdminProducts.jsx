@@ -11,15 +11,17 @@ export default function AdminProducts() {
     }
   return (
     <>
+     <AdminProductList
+    onEdit={setEditingProduct}
+    refreshProducts={refreshProducts}
+     />
+     
     <ProductForm
     editingProduct={editingProduct}
     onProductSaved={handleProductSaved}
     onCancelEdit={()=>setEditingProduct(null)}
      />
-    <AdminProductList
-    onEdit={setEditingProduct}
-    refreshProducts={refreshProducts}
-     />
+   
     </>
   )
 }

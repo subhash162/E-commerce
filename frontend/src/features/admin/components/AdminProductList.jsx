@@ -37,10 +37,10 @@ export default function AdminProductList({ onEdit , refreshProducts }) {
     }
   return (
     <div>
-        <h2>Products</h2>
-        <div>
+        <h2>Products You Posted</h2>
+        <div className='flex'>
             {products.map((product)=>(
-                <div key={product.id}>
+                <div key={product.id} className='w-[25vh] h-[25vh] border'>
                     <h3>{product.name}</h3>
                     <p>{product.price}</p>
                     <p>{product.category}</p>
