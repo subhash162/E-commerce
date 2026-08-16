@@ -41,8 +41,9 @@ export async function register(req,res){
     
 }
 export async function login(req,res) {
+   
     try{
-        const {email,password}=req.body;
+         const { email , password } =req.body;
     if(!email || !password){
         res.status(400).json({
             message:"Email and password are required"
@@ -88,6 +89,7 @@ export async function login(req,res) {
         }
     })
 }catch(error){
+    console.error("LOGIN ERROR:", error);
     res.status(500).json({
         message:"SERVER error"
     })
