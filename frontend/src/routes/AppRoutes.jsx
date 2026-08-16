@@ -22,9 +22,9 @@ export default function AppRoutes() {
         </Route>
 
         <Route element={<AdminRoute />}>
-        <Route path='/admin/products' element={<AdminRoute />} />
+        <Route path='/admin/products' element={<AdminProducts />} />
         </Route>
-        
+
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
     </Routes>
