@@ -9,6 +9,10 @@ import Login from '../features/auth/pages/login'
 import Register from '../features/auth/pages/Register'
 import ProtectedRoute from '../features/auth/components/ProtectedRoute'
 import AdminRoute from '../features/auth/components/AdminRoute'
+import Checkout from '../features/checkout/pages/Checkout'
+import OrderSuccess from '../features/checkout/pages/OrderSuccess'
+import MyOrders from '../features/checkout/pages/MyOrders'
+import AdminOrders from '../features/admin/pages/AdminOrders'
 
 export default function AppRoutes() {
   return (
@@ -19,10 +23,14 @@ export default function AppRoutes() {
 
         <Route element={<ProtectedRoute />}>
         <Route path='/cart' element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order-success/:id" element={<OrderSuccess />} />
+        <Route path="/orders" element={<MyOrders />} />
         </Route>
 
         <Route element={<AdminRoute />}>
         <Route path='/admin/products' element={<AdminProducts />} />
+        <Route path="/admin/orders" element={<AdminOrders />} />
         </Route>
 
         <Route path='/login' element={<Login />} />
